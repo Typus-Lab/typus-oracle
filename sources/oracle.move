@@ -73,8 +73,8 @@ module typus_oracle::oracle {
 
     public fun get_oracle<T>(
         oracle: &Oracle<T>
-    ): (u64, u64, u64) {
-        (oracle.price, oracle.unix_ms, oracle.epoch)
+    ): (u64, u64, u64, u64) {
+        (oracle.price, oracle.decimal, oracle.unix_ms, oracle.epoch)
     }
 
     /// Key does not match the Lock.
