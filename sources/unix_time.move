@@ -92,7 +92,7 @@ module typus_oracle::unix_time {
     ): Time {
         let time = Time { 
             id: object::new(ctx),
-            ts_ms: 0,
+            unix_ms: 0,
             epoch: tx_context::epoch(ctx)
         };
 
@@ -106,7 +106,7 @@ module typus_oracle::unix_time {
     public fun destroy_for_testing(self: Time){
         let Time{
             id,
-            ts_ms: _,
+            unix_ms: _,
             epoch: _,
         } = self;
         object::delete(id);
