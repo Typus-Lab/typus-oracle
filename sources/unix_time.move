@@ -8,7 +8,7 @@ module typus_oracle::unix_time {
 
     struct Time has key {
         id: UID,
-        unix_ms: u64,
+        ts_ms: u64,
         epoch: u64,
     }
 
@@ -28,7 +28,7 @@ module typus_oracle::unix_time {
         
         let time = Time { 
             id,
-            unix_ms: 0,
+            ts_ms: 0,
             epoch: tx_context::epoch(ctx)
         };
 
@@ -43,14 +43,14 @@ module typus_oracle::unix_time {
     public entry fun update(
         time: &mut Time,
         key: &Key,
-        unix_ms: u64,
+        ts_ms: u64,
         ctx: &mut TxContext
     ) {
         assert!(&key.for == object::borrow_id(time), EKeyMismatch);
 
-        time.unix_ms = unix_ms;
+        time.ts_ms = ts_ms;
         time.epoch = tx_context::epoch(ctx);
-        emit(TimeEvent { unix_ms, epoch: tx_context::epoch(ctx) });
+        emit(TimeEvent { ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
     public entry fun copy_key(
@@ -66,13 +66,13 @@ module typus_oracle::unix_time {
     public fun get_time(
         time: &Time
     ): (u64, u64) {
-        (time.unix_ms , time.epoch)
+        (time.ts_ms , time.epoch)
     }
 
-    public fun get_unix_ms(
+    public fun get_ts_ms(
         time: &Time
     ): u64 {
-        time.unix_ms
+        time.ts_ms
     }
 
     public fun get_epoch(
@@ -84,5 +84,5 @@ module typus_oracle::unix_time {
     /// Key does not match the Lock.
     const EKeyMismatch: u64 = 0;
 
-    struct TimeEvent has copy, drop { unix_ms: u64, epoch: u64 }
+    struct TimeEvent has copy, drop { ts_ms: u64, epoch: u64 }
 }
