@@ -10,7 +10,7 @@ module typus_oracle::oracle {
         id: UID,
         decimal: u64,
         price: u64,
-        unix_ms: u64,
+        ts_ms: u64,
         epoch: u64,
     }
 
@@ -33,7 +33,7 @@ module typus_oracle::oracle {
             id,
             decimal,
             price: 0,
-            unix_ms: 0,
+            ts_ms: 0,
             epoch: tx_context::epoch(ctx)
         };
 
@@ -49,16 +49,16 @@ module typus_oracle::oracle {
         oracle: &mut Oracle<T>,
         key: &Key<T>,
         price: u64,
-        unix_ms: u64,
+        ts_ms: u64,
         ctx: &mut TxContext
     ) {
         assert!(&key.for == object::borrow_id(oracle), EKeyMismatch);
 
         oracle.price = price;
-        oracle.unix_ms = unix_ms;
+        oracle.ts_ms = ts_ms;
         oracle.epoch = tx_context::epoch(ctx);
 
-        emit(PriceEvent { price, unix_ms, epoch: tx_context::epoch(ctx) });
+        emit(PriceEvent { price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
     public entry fun copy_key<T>(
@@ -74,34 +74,11 @@ module typus_oracle::oracle {
     public fun get_oracle<T>(
         oracle: &Oracle<T>
     ): (u64, u64, u64, u64) {
-        (oracle.price, oracle.decimal, oracle.unix_ms, oracle.epoch)
+        (oracle.price, oracle.decimal, oracle.ts_ms, oracle.epoch)
     }
 
     /// Key does not match the Lock.
     const EKeyMismatch: u64 = 0;
 
-    struct PriceEvent has copy, drop { price: u64, unix_ms: u64, epoch: u64 }
-
-    #[test_only]
-    public fun test_new_oracle<T>(
-        decimal: u64,
-        ctx: &mut TxContext
-    ): (Oracle<T>, Key<T>) {
-        let id = object::new(ctx);
-        let for = object::uid_to_inner(&id);
-        
-        let oracle = Oracle<T> { 
-            id,
-            decimal,
-            price: 0,
-            unix_ms: 0,
-            epoch: tx_context::epoch(ctx)
-        };
-
-        let key = Key<T> {
-            for,
-            id: object::new(ctx)
-        };
-        (oracle, key)
-    }
+    struct PriceEvent has copy, drop { price: u64, ts_ms: u64, epoch: u64 }
 }
