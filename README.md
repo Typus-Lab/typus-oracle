@@ -16,7 +16,9 @@
 `0xe85eabdada216e470344b2e70cdc8155a4007a2a`
 
 ### Time Oracle (20s update)
-unix_time: `0xf1166158630aa5d650fd178ff96190f55e81c912`
+
+1. unix_time: `0xd0a2ef11a7c96e46d304a9511f6382756150b6d7`
+   * Key: `0xf1166158630aa5d650fd178ff96190f55e81c912`
 
 ### Price Oracle (20s update)
 
