@@ -4,7 +4,7 @@
 
 `sui client publish  --gas-budget 10000`
 
-`export PACKAGE=0xe85eabdada216e470344b2e70cdc8155a4007a2a`
+`export PACKAGE=0xe450380f9abda5ef5a7d8674f36d60caeb5a5b22`
 
 `sui client call --gas-budget 10000 --package $PACKAGE --module "unix_time" --function "new_time"`
 
@@ -13,7 +13,7 @@
 ## Usage
 
 ### PACKAGE
-`0xe85eabdada216e470344b2e70cdc8155a4007a2a`
+`0xe450380f9abda5ef5a7d8674f36d60caeb5a5b22`
 
 ### Time Oracle (20s update)
 
