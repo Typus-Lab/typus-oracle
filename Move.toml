@@ -7,5 +7,5 @@ Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-fram
 # SupraOracle = { local = "./price-oracle-framework" }
 
 [addresses]
-typus_oracle = "0x76d673a3f7aa558016e692b4de02c71de11f00b7"
+typus_oracle = "0x7d683916b32c25b0061e65d3c744838cea225fe9"
 sui = "0000000000000000000000000000000000000002"
