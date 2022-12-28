@@ -4,8 +4,8 @@ version = "0.0.1"
 
 [dependencies]
 Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework", rev = "devnet" }
-# SupraOracle = { local = "./price-oracle-framework" }
+# SupraOracle = { local = "./supra-oracle" }
 
 [addresses]
-typus_oracle = "0x7d683916b32c25b0061e65d3c744838cea225fe9"
+typus_oracle = "0x437d2eb473bd348ad22b37ffb84bd652656026b1"
 sui = "0000000000000000000000000000000000000002"
