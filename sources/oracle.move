@@ -10,6 +10,7 @@ module typus_oracle::oracle {
         id: UID,
         decimal: u64,
         price: u64,
+        twap_price_1h: u64,
         ts_ms: u64,
         epoch: u64,
     }
@@ -33,6 +34,7 @@ module typus_oracle::oracle {
             id,
             decimal,
             price: 0,
+            twap_price_1h: 0,
             ts_ms: 0,
             epoch: tx_context::epoch(ctx)
         };
@@ -49,12 +51,14 @@ module typus_oracle::oracle {
         oracle: &mut Oracle<T>,
         key: &Key<T>,
         price: u64,
+        twap_price_1h: u64,
         ts_ms: u64,
         ctx: &mut TxContext
     ) {
         assert!(&key.for == object::borrow_id(oracle), EKeyMismatch);
 
         oracle.price = price;
+        oracle.twap_price_1h = twap_price_1h;
         oracle.ts_ms = ts_ms;
         oracle.epoch = tx_context::epoch(ctx);
 
