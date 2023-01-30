@@ -1,11 +1,11 @@
 [package]
 name = "typus_oracle"
-version = "0.1.3"
+version = "0.1.4"
 
 [dependencies]
-Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework", rev = "devnet" }
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework", rev = "testnet" }
 # SupraOracle = { local = "./supra-oracle" }
 
 [addresses]
-typus_oracle = "0xcba43b3a1672f3c782e2167fc64710799009d5bb"
+typus_oracle = "0x0"
 sui = "0000000000000000000000000000000000000002"

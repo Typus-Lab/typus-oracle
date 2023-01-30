@@ -4,40 +4,40 @@
 
 `sui client publish  --gas-budget 10000`
 
-`export ORACLE_PACKAGE=0xcba43b3a1672f3c782e2167fc64710799009d5bb`
+`export ORACLE_PACKAGE=0x0a55a6dfa713f83cb3be5e3ca8a8435ccdbb500d`
 
 `sui client call --gas-budget 10000 --package $ORACLE_PACKAGE --module "unix_time" --function "new_time"`
 
-`sui client call --gas-budget 10000 --package $ORACLE_PACKAGE --module "oracle" --function "new_oracle" --type-args  0x3e416d10557c532838c2d0d6996c8a3bc81371a7::btc::BTC --args 0x8`
+`sui client call --gas-budget 10000 --package $ORACLE_PACKAGE --module "oracle" --function "new_oracle" --type-args  0xa1d0cdb1b41c786d53a03d30340ab05718010e04::btc::BTC --args 0x8`
 
-`sui client call --gas-budget 10000 --package $ORACLE_PACKAGE --module "oracle" --function "new_oracle" --type-args  0x3e416d10557c532838c2d0d6996c8a3bc81371a7::eth::ETH --args 0x8`
+`sui client call --gas-budget 10000 --package $ORACLE_PACKAGE --module "oracle" --function "new_oracle" --type-args  0xa1d0cdb1b41c786d53a03d30340ab05718010e04::eth::ETH --args 0x8`
 
 ## Usage
 
 ### PACKAGE
-`0xcba43b3a1672f3c782e2167fc64710799009d5bb`
+`0x0a55a6dfa713f83cb3be5e3ca8a8435ccdbb500d`
 
 ### Time Oracle (20s update)
 
-1. unix_time: `0x55031e1edc517a4b16543c1c081ba33a59ffd084`
-   * Key: `0x59f22fbf2672197b28841813588297c84f7e9ed1`
+1. unix_time: `0x31ce3e644e13dcb241d68bdba2783b1d6ab72a6c`
+   * Key: `0xdc99399ec8f5a1888eed19fe17e945a1196df15b`
 
 ### Price Oracle (20s update)
 
-1. BTC `0x764d0c3b931006a473453a0095032681fcb26304`
-    * Token: `0x3e416d10557c532838c2d0d6996c8a3bc81371a7::btc::BTC`
-    * Key: `0x30357dc1c2a2feed17b8683d202968631088a207`
+1. BTC `0x379cf4a0b69012736feeb64302c4d6ce0a29fca7`
+    * Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::btc::BTC`
+    * Key: `0xd48b60fed34e7ab93f5a65ef5b6805e453e4d40e`
     * Data Source: https://api.binance.com/api/v3/ticker/price?symbol=BTCBUSD 
 
 
-2. ETH `0x112b09dfe4f976c65a4905faa5993175861dfad0`
-    * Token: `0x3e416d10557c532838c2d0d6996c8a3bc81371a7::eth::ETH`
-    * Key: `0x697f82c94f9f248ae9b4da567d1a89e1d268b2f2`
+2. ETH `0x14af45e8938c39e845ca189fa898f1e569ea2ced`
+    * Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::eth::ETH`
+    * Key: `0xca4037ffae6006e2e7ce1db1ac74b1d25e5d0b3a`
     * Data Source: https://api.binance.com/api/v3/ticker/price?symbol=ETHBUSD 
 
-3. SUI `0x249808c33309a97d271e7a7da67c328f1eb9b312`
-    * Token: `0x3e416d10557c532838c2d0d6996c8a3bc81371a7::sui::SUI`
-    * Key: `0x7010b351664cff58a9ce2064f63055b28eebe074`
+3. SUI `0xb2a281264d928622999103afa27fceead0cb2b86`
+    * Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::sui::SUI`
+    * Key: `0x69e764b55e7dfcf5604da8cf5571e5e8501f294f`
 
 Token: https://github.com/Typus-Lab/sui-dev-token
 
