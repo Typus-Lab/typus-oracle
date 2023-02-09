@@ -47,3 +47,16 @@ Usage: https://github.com/Typus-Lab/typus-dov
 https://supraoracles.com
 
 `sui client call --gas-budget 10000 --package $PACKAGE --module "supra" --function "retrieve_price" --args 0xc40820e20346809f11f0bd04e954792f897a84d0 btc_usdt` -->
+
+### Updated
+```
+"ORACLE_PACKAGE": "0xddfa73b1bf15da6f72da9346a16051b7b90db1a6",
+"TIME_ORACLE": "0xb4a661b1493812476558de89af2092245b2d893f",
+"TIME_ORACLE_KEY": "0xc9c14e64919681423d492f9856562bb851de11ef",
+"BTC_ORACLE": "0x2c60549de9881be1013aadc04b956fbaa7b2574a",
+"BTC_ORACLE_KEY": "0x90502cae9985e319d5ddd3524d6dcbbc6d9a4a48",
+"ETH_ORACLE": "0xb9f95fb5faeb1b248baa3cb577592daf5b81bd97",
+"ETH_ORACLE_KEY": "0xe0a942f996eea78409d0aeaf5c15631e929517a2",
+"SUI_ORACLE": "0x62ce814cbfd87758df9953a93d44fbdc7b0802ee",
+"SUI_ORACLE_KEY": "0xaf3151433dd949a9fbba4288374b404edb937cfd",
+```
