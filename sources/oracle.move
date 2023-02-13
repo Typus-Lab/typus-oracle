@@ -3,6 +3,7 @@ module typus_oracle::oracle {
     use sui::object::{Self, UID, ID};
     use sui::transfer;
     use sui::event::emit;
+    use std::type_name::{Self, TypeName};
 
     // ======== Structs =========
 
@@ -62,7 +63,9 @@ module typus_oracle::oracle {
         oracle.ts_ms = ts_ms;
         oracle.epoch = tx_context::epoch(ctx);
 
-        emit(PriceEvent { price, ts_ms, epoch: tx_context::epoch(ctx) });
+        let token = type_name::get<T>();
+
+        emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
     public entry fun copy_key<T>(
@@ -84,5 +87,5 @@ module typus_oracle::oracle {
     /// Key does not match the Lock.
     const EKeyMismatch: u64 = 0;
 
-    struct PriceEvent has copy, drop { price: u64, ts_ms: u64, epoch: u64 }
+    struct PriceEvent has copy, drop { token: TypeName, price: u64, ts_ms: u64, epoch: u64 }
 }
