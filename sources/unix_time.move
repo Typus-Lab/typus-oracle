@@ -55,12 +55,13 @@ module typus_oracle::unix_time {
 
     public entry fun copy_key(
         key: &Key,
+        recipient: address,
         ctx: &mut TxContext
     ) {
         transfer::transfer(Key {
             id: object::new(ctx),
             for: key.for
-        }, tx_context::sender(ctx));
+        }, recipient);
     }
 
     public fun get_time(

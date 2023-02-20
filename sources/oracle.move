@@ -71,12 +71,13 @@ module typus_oracle::oracle {
 
     public entry fun copy_key<T>(
         key: &Key<T>,
+        recipient: address,
         ctx: &mut TxContext
     ) {
         transfer::transfer(Key<T> {
             id: object::new(ctx),
             for: key.for
-        }, tx_context::sender(ctx));
+        }, recipient);
     }
 
     public fun get_oracle<T>(
