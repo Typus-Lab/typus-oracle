@@ -25,8 +25,8 @@ module typus_oracle::unix_time {
 
         let id = object::new(ctx);
         let for = object::uid_to_inner(&id);
-        
-        let time = Time { 
+
+        let time = Time {
             id,
             ts_ms: 0,
             epoch: tx_context::epoch(ctx)

@@ -31,8 +31,8 @@ module typus_oracle::oracle {
 
         let id = object::new(ctx);
         let for = object::uid_to_inner(&id);
-        
-        let oracle = Oracle<T> { 
+
+        let oracle = Oracle<T> {
             id,
             decimal,
             price: 0,

@@ -1,7 +1,7 @@
 // module typus_oracle::supra {
 //     use sui::event::emit;
 //     use std::string::String;
-    
+
 //     use SupraOracle::PriceOracle::{get_price, OracleHolder};
 
 //     public entry fun retrieve_price(
