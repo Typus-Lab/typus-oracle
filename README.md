@@ -27,13 +27,13 @@
 1. BTC `0x379cf4a0b69012736feeb64302c4d6ce0a29fca7`
     * Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::btc::BTC`
     * Key: `0xd48b60fed34e7ab93f5a65ef5b6805e453e4d40e`
-    * Data Source: https://api.binance.com/api/v3/ticker/price?symbol=BTCBUSD 
+    * Data Source: https://api.binance.com/api/v3/ticker/price?symbol=BTCBUSD
 
 
 2. ETH `0x14af45e8938c39e845ca189fa898f1e569ea2ced`
     * Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::eth::ETH`
     * Key: `0xca4037ffae6006e2e7ce1db1ac74b1d25e5d0b3a`
-    * Data Source: https://api.binance.com/api/v3/ticker/price?symbol=ETHBUSD 
+    * Data Source: https://api.binance.com/api/v3/ticker/price?symbol=ETHBUSD
 
 3. SUI `0xb2a281264d928622999103afa27fceead0cb2b86`
     * Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::sui::SUI`
@@ -50,17 +50,15 @@ https://supraoracles.com
 
 ### Updated
 ```
-    "ORACLE_PACKAGE": "0x09f44378771672533b36fbe5d92c4fbf1aee548d",
-    "TIME_ORACLE": "0x36729d3aaba1c20414cc5a19f80632bfbdb4099b",
-    "TIME_ORACLE_KEY": "0x13af709836e8d6745026eed7cc6007d74e6fad3e",
-    "BTC_ORACLE": "0x6d90225a4cd43510d141f3b27a2eaeb9e88e115a",
-    "BTC_ORACLE_KEY": "0x0b6467006e2944f7c6b210d84ba13bd7a9fa6b99",
-    "ETH_ORACLE": "0xe3b13478238f53d2eb9078568d5f80ee354f4c86",
-    "ETH_ORACLE_KEY": "0x55a9ff4a3a0ab6f3a43189606b89fb88f9bcad0a",
-    "SUI_ORACLE": "0x0b8212a98925f52379dea40cab0b5760c596aaf4",
-    "SUI_ORACLE_KEY": "0xef9597c32f1ab883e66adda5e93414e2e1dc8dde",
-    "APT_ORACLE_KEY": "0x47759a9f7770e44a144617228bd8a6a0f26f9e74",
-    "APT_ORACLE": "0x587be89ff0dec3a1b28e75c50af4c17c3fd1797e",
-    "DOGE_ORACLE_KEY": "0x2a81bf87b4800e3b19fa25c76318783f16a4ffc6",
-    "DOGE_ORACLE": "0xe08a33db82b288a642ce6f4df1ab6bbbcb3c2aba"
+    "ORACLE_PACKAGE": "0xa95c782f521d321b984f38fdbc0536a962fc795460ceba28c508048ceab14bfd",
+    "BTC_ORACLE": "0xde0b5a5279fb9cb1da76c148e969cded48299c2d6f08574584f3bd8532fd4509",
+    "BTC_ORACLE_KEY": "0x7149bdd3bf35f93424c401c98331076ae0684dd2c8c9a43a6931db1b32484ca7",
+    "ETH_ORACLE": "0x9f9658c86bae409f16907076f9c99a1f33044325d34bfb3c4a096000801b3c6d",
+    "ETH_ORACLE_KEY": "0xd7ef341c6a20fb0985c2268794b7184b3bd5c25cdee078b4b36a4e215f922afa",
+    "SUI_ORACLE": "0xf5e969446aeb3a612a6b060a988d01ba08be32597d80522fe662cb5243ef8efc",
+    "SUI_ORACLE_KEY": "0x71abd86cbb57bc6b3679e6a7ad9c8353efc6da0362290ab4250a3a47e6ed1475",
+    "APT_ORACLE": "0x35a53edad98b4fff702b0e90a5377aa6ff8f829b68de177a2245af95659d8cad",
+    "APT_ORACLE_KEY": "0x326886de4ada48500a2bdd10e0a65be9f0d061fd0bb401a75c417090f23ab213",
+    "DOGE_ORACLE": "0x3affaed19e4c5975d12c8532844c955df495feb080dd8d629b02d0cac9979639",
+    "DOGE_ORACLE_KEY": "0xbb678d200850db441d7159165da228f7c4faabb14245fa6222b99171d2ae3505"
 ```
