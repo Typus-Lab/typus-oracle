@@ -96,7 +96,7 @@ module typus_oracle::oracle {
         (oracle.price, oracle.decimal)
     }
 
-    entry fun update_time_interval<T>(
+    public entry fun update_time_interval<T>(
         oracle: &mut Oracle<T>,
         key: &Key<T>,
         time_interval: u64,
