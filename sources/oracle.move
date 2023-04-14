@@ -15,6 +15,7 @@ module typus_oracle::oracle {
         twap_price_1h: u64,
         ts_ms: u64,
         epoch: u64,
+        time_interval: u64
     }
 
     struct Key<phantom T> has key {
@@ -38,7 +39,8 @@ module typus_oracle::oracle {
             price: 0,
             twap_price_1h: 0,
             ts_ms: 0,
-            epoch: tx_context::epoch(ctx)
+            epoch: tx_context::epoch(ctx),
+            time_interval: 60 * 1000
         };
 
         transfer::share_object(oracle);
@@ -86,8 +88,26 @@ module typus_oracle::oracle {
         (oracle.price, oracle.decimal, oracle.ts_ms, oracle.epoch)
     }
 
+    public fun get_price<T>(
+        oracle: &Oracle<T>,
+        ts_ms: u64,
+    ): (u64, u64) {
+        assert!(ts_ms - oracle.ts_ms < oracle.time_interval, E_ORACLE_EXPIRED);
+        (oracle.price, oracle.decimal)
+    }
+
+    entry fun update_time_interval<T>(
+        oracle: &mut Oracle<T>,
+        key: &Key<T>,
+        time_interval: u64,
+    ) {
+        assert!(&key.for == object::borrow_id(oracle), EKeyMismatch);
+        oracle.time_interval = time_interval;
+    }
+
     /// Key does not match the Lock.
     const EKeyMismatch: u64 = 0;
+    const E_ORACLE_EXPIRED: u64 = 1;
 
     struct PriceEvent has copy, drop { token: String, price: u64, ts_ms: u64, epoch: u64 }
 }
