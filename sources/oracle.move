@@ -40,7 +40,7 @@ module typus_oracle::oracle {
             twap_price_1h: 0,
             ts_ms: 0,
             epoch: tx_context::epoch(ctx),
-            time_interval: 60 * 1000
+            time_interval: 300 * 1000
         };
 
         transfer::share_object(oracle);
