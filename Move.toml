@@ -4,9 +4,10 @@ version = "0.4.0"
 published-at = "0x4144cc4bf374646f45927ca82482ab99920b78477bce572d10b7e49d746108c9"
 
 [dependencies]
-Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "testnet" }
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "testnet-0.32.0" }
 # SupraOracle = { local = "./supra-oracle" }
+CetusClmm = { git = "https://github.com/CetusProtocol/cetus-clmm-interface", subdir = "sui/clmmpool", rev = "main"}
 
 [addresses]
-typus_oracle = "0x4144cc4bf374646f45927ca82482ab99920b78477bce572d10b7e49d746108c9"
+typus_oracle = "0x0"
 sui = "0x2"
