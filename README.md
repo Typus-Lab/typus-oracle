@@ -79,3 +79,13 @@ https://supraoracles.com
 2. Function Args Change:
    - twap_price_1h rename twap_price
    - ts_ms: u64 -> clock: &Clock
+
+### 0.3.1
+
+1. Struct Change:
+   - Oracle: add quote_token, base_token
+
+2. Function Change:
+   - new_oracle add quote_token, base_token
+   - add price check in update
+   - add get_twap_price
