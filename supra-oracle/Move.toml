@@ -3,7 +3,7 @@ name = 'SupraOracle'
 version = '1.0.0'
 
 [dependencies]
-Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework", rev = "devnet" }
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework", rev = "testnet" }
 
 [addresses]
 SupraOracle = "0x0735bde3dac7bdab7b9cbf9b99922402c370b160"

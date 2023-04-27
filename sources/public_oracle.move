@@ -1,4 +1,4 @@
-module typus_oracle::oracle {
+module typus_oracle::public_oracle {
     use sui::tx_context::{Self, TxContext};
     use sui::object::{Self, UID, ID};
     use sui::transfer;
@@ -9,10 +9,6 @@ module typus_oracle::oracle {
     use std::ascii::String;
 
     // ======== Structs =========
-
-    struct ManagerCap has key {
-        id: UID,
-    }
 
     struct Oracle<phantom T> has key {
         id: UID,
@@ -26,18 +22,14 @@ module typus_oracle::oracle {
         time_interval: u64
     }
 
-    // ======== Functions =========
-
-    fun init(ctx: &mut TxContext) {
-        transfer::transfer(
-            ManagerCap {id: object::new(ctx)},
-            tx_context::sender(ctx)
-        );
+    struct Key<phantom T> has key {
+        id: UID,
+        for: ID,
     }
 
+    // ======== Functions =========
 
     public entry fun new_oracle<T>(
-        manager_cap: &ManagerCap,
         quote_token: String,
         base_token: String,
         decimal: u64,
@@ -60,16 +52,22 @@ module typus_oracle::oracle {
         };
 
         transfer::share_object(oracle);
+
+        transfer::transfer(Key<T> {
+            for,
+            id: object::new(ctx)
+        }, tx_context::sender(ctx));
     }
 
     public entry fun update<T>(
         oracle: &mut Oracle<T>,
-        manager_cap: &ManagerCap,
+        key: &Key<T>,
         price: u64,
         twap_price: u64,
         clock: &Clock,
         ctx: &mut TxContext
     ) {
+        assert!(&key.for == object::borrow_id(oracle), EKeyMismatch);
         assert!(price > 0, E_INVALID_PRICE);
         assert!(twap_price > 0, E_INVALID_PRICE);
 
@@ -85,12 +83,15 @@ module typus_oracle::oracle {
         emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
-    public entry fun copy_manager_cap<T>(
-        manager_cap: &ManagerCap,
+    public entry fun copy_key<T>(
+        key: &Key<T>,
         recipient: address,
         ctx: &mut TxContext
     ) {
-        transfer::transfer(ManagerCap {id: object::new(ctx)}, recipient);
+        transfer::transfer(Key<T> {
+            id: object::new(ctx),
+            for: key.for
+        }, recipient);
     }
 
     public fun get_oracle<T>(
@@ -117,12 +118,15 @@ module typus_oracle::oracle {
 
     public entry fun update_time_interval<T>(
         oracle: &mut Oracle<T>,
-        manager_cap: &ManagerCap,
+        key: &Key<T>,
         time_interval: u64,
     ) {
+        assert!(&key.for == object::borrow_id(oracle), EKeyMismatch);
         oracle.time_interval = time_interval;
     }
 
+    /// Key does not match the Lock.
+    const EKeyMismatch: u64 = 0;
     const E_ORACLE_EXPIRED: u64 = 1;
     const E_INVALID_PRICE: u64 = 2;
 
