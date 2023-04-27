@@ -89,3 +89,12 @@ https://supraoracles.com
    - new_oracle add quote_token, base_token
    - add price check in update
    - add get_twap_price
+
+### 0.4.0
+
+1. Breaking Change:
+   - rename oracle to public_oracle
+   - add a new (private) oracle module
+
+2. Function Change about private Oracle:
+   - replace Key with ManagerCap
