@@ -66,3 +66,16 @@ https://supraoracles.com
     "DOGE_ORACLE": "0xe43157e6cf9d4090245c7710e1a015cded9c376e25742b590ee9c06989826972",
     "DOGE_ORACLE_KEY": "0x7df1df5bbe3b5086a7318fceea6bee603d03b917574fff894fd6408f5956d1fb"
 ```
+
+
+
+## Change Log
+
+### 0.3.0
+
+1. Struct Change:
+   - Oracle: twap_price_1h rename twap_price
+
+2. Function Args Change:
+   - twap_price_1h rename twap_price
+   - ts_ms: u64 -> clock: &Clock
