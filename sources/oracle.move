@@ -1,6 +1,6 @@
 module typus_oracle::oracle {
     use sui::tx_context::{Self, TxContext};
-    use sui::object::{Self, UID, ID};
+    use sui::object::{Self, UID};
     use sui::transfer;
     use sui::event::emit;
     use sui::clock::{Self, Clock};
@@ -37,7 +37,7 @@ module typus_oracle::oracle {
 
 
     public entry fun new_oracle<T>(
-        manager_cap: &ManagerCap,
+        _manager_cap: &ManagerCap,
         quote_token: String,
         base_token: String,
         decimal: u64,
@@ -45,7 +45,6 @@ module typus_oracle::oracle {
     ) {
 
         let id = object::new(ctx);
-        let for = object::uid_to_inner(&id);
 
         let oracle = Oracle<T> {
             id,
@@ -64,7 +63,7 @@ module typus_oracle::oracle {
 
     public entry fun update<T>(
         oracle: &mut Oracle<T>,
-        manager_cap: &ManagerCap,
+        _manager_cap: &ManagerCap,
         price: u64,
         twap_price: u64,
         clock: &Clock,
@@ -86,7 +85,7 @@ module typus_oracle::oracle {
     }
 
     public entry fun copy_manager_cap<T>(
-        manager_cap: &ManagerCap,
+        _manager_cap: &ManagerCap,
         recipient: address,
         ctx: &mut TxContext
     ) {
@@ -117,7 +116,7 @@ module typus_oracle::oracle {
 
     public entry fun update_time_interval<T>(
         oracle: &mut Oracle<T>,
-        manager_cap: &ManagerCap,
+        _manager_cap: &ManagerCap,
         time_interval: u64,
     ) {
         oracle.time_interval = time_interval;
