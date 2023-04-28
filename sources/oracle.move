@@ -35,6 +35,10 @@ module typus_oracle::oracle {
         );
     }
 
+    #[test_only]
+    public fun test_init(ctx: &mut TxContext) {
+        init(ctx);
+    }
 
     public entry fun new_oracle<T>(
         _manager_cap: &ManagerCap,
