@@ -104,16 +104,18 @@ module typus_oracle::oracle {
 
     public fun get_price<T>(
         oracle: &Oracle<T>,
-        ts_ms: u64,
+        clock: &Clock,
     ): (u64, u64) {
+        let ts_ms = clock::timestamp_ms(clock);
         assert!(ts_ms - oracle.ts_ms < oracle.time_interval, E_ORACLE_EXPIRED);
         (oracle.price, oracle.decimal)
     }
 
     public fun get_twap_price<T>(
         oracle: &Oracle<T>,
-        ts_ms: u64,
+        clock: &Clock,
     ): (u64, u64) {
+        let ts_ms = clock::timestamp_ms(clock);
         assert!(ts_ms - oracle.ts_ms < oracle.time_interval, E_ORACLE_EXPIRED);
         (oracle.twap_price, oracle.decimal)
     }

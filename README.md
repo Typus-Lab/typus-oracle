@@ -98,3 +98,8 @@ https://supraoracles.com
 
 2. Function Change about private Oracle:
    - replace Key with ManagerCap
+
+### 0.4.1
+
+1. Function Args Change:
+   - ts_ms: u64 -> clock: &Clock
