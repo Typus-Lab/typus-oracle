@@ -1,6 +1,6 @@
 [package]
 name = "typus_oracle"
-version = "0.4.1"
+version = "0.4.2"
 published-at = "0xb339308779018f7f7d5334890ca910b6eb1611e652e523dc405bbd7a9fc05ff0"
 
 [dependencies]
