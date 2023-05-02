@@ -29,7 +29,7 @@ module typus_oracle::public_oracle {
 
     // ======== Functions =========
 
-    public entry fun new_oracle<T>(
+    entry fun new_oracle<T>(
         quote_token: String,
         base_token: String,
         decimal: u64,
@@ -59,7 +59,7 @@ module typus_oracle::public_oracle {
         }, tx_context::sender(ctx));
     }
 
-    public entry fun update<T>(
+    entry fun update<T>(
         oracle: &mut Oracle<T>,
         key: &Key<T>,
         price: u64,
@@ -83,7 +83,16 @@ module typus_oracle::public_oracle {
         emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
-    public entry fun copy_key<T>(
+    entry fun update_time_interval<T>(
+        oracle: &mut Oracle<T>,
+        key: &Key<T>,
+        time_interval: u64,
+    ) {
+        assert!(&key.for == object::borrow_id(oracle), EKeyMismatch);
+        oracle.time_interval = time_interval;
+    }
+
+    entry fun copy_key<T>(
         key: &Key<T>,
         recipient: address,
         ctx: &mut TxContext
@@ -114,15 +123,6 @@ module typus_oracle::public_oracle {
     ): (u64, u64) {
         assert!(ts_ms - oracle.ts_ms < oracle.time_interval, E_ORACLE_EXPIRED);
         (oracle.twap_price, oracle.decimal)
-    }
-
-    public entry fun update_time_interval<T>(
-        oracle: &mut Oracle<T>,
-        key: &Key<T>,
-        time_interval: u64,
-    ) {
-        assert!(&key.for == object::borrow_id(oracle), EKeyMismatch);
-        oracle.time_interval = time_interval;
     }
 
     /// Key does not match the Lock.

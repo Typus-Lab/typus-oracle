@@ -40,7 +40,7 @@ module typus_oracle::oracle {
         init(ctx);
     }
 
-    public entry fun new_oracle<T>(
+    entry fun new_oracle<T>(
         _manager_cap: &ManagerCap,
         quote_token: String,
         base_token: String,
@@ -65,7 +65,7 @@ module typus_oracle::oracle {
         transfer::share_object(oracle);
     }
 
-    public entry fun update<T>(
+    entry fun update<T>(
         oracle: &mut Oracle<T>,
         _manager_cap: &ManagerCap,
         price: u64,
@@ -88,7 +88,15 @@ module typus_oracle::oracle {
         emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
-    public entry fun copy_manager_cap<T>(
+    entry fun update_time_interval<T>(
+        oracle: &mut Oracle<T>,
+        _manager_cap: &ManagerCap,
+        time_interval: u64,
+    ) {
+        oracle.time_interval = time_interval;
+    }
+
+    entry fun copy_manager_cap<T>(
         _manager_cap: &ManagerCap,
         recipient: address,
         ctx: &mut TxContext
@@ -118,14 +126,6 @@ module typus_oracle::oracle {
         let ts_ms = clock::timestamp_ms(clock);
         assert!(ts_ms - oracle.ts_ms < oracle.time_interval, E_ORACLE_EXPIRED);
         (oracle.twap_price, oracle.decimal)
-    }
-
-    public entry fun update_time_interval<T>(
-        oracle: &mut Oracle<T>,
-        _manager_cap: &ManagerCap,
-        time_interval: u64,
-    ) {
-        oracle.time_interval = time_interval;
     }
 
     const E_ORACLE_EXPIRED: u64 = 1;
