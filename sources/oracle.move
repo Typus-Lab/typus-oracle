@@ -88,6 +88,41 @@ module typus_oracle::oracle {
         emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
+    use switchboard::aggregator::{Aggregator};
+    use typus_oracle::switchboard_feed_parser;
+
+    public entry fun update_with_switchboard<T>(
+        oracle: &mut Oracle<T>,
+        _manager_cap: &ManagerCap,
+        feed: &Aggregator,
+        clock: &Clock,
+        ctx: &mut TxContext
+    ) {
+        let ts_ms = clock::timestamp_ms(clock);
+
+        let (price_u128, decimal_u8) = switchboard_feed_parser::log_aggregator_info(feed);
+        assert!(price_u128 > 0, E_INVALID_PRICE);
+
+        let decimal = (decimal_u8 as u64);
+        if (decimal > oracle.decimal) {
+            price_u128 = price_u128 / ((10 ^ (decimal - oracle.decimal)) as u128);
+        } else {
+            price_u128 = price_u128 * ((10 ^ (oracle.decimal - decimal)) as u128);
+        };
+
+        let price = (price_u128 as u64);
+        oracle.price = price;
+        oracle.twap_price = price;
+        oracle.ts_ms = ts_ms;
+        oracle.epoch = tx_context::epoch(ctx);
+
+        let token = *type_name::borrow_string(&type_name::get<T>());
+
+        emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
+    }
+
+
+
     public entry fun copy_manager_cap<T>(
         _manager_cap: &ManagerCap,
         recipient: address,

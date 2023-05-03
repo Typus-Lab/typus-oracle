@@ -1,12 +1,13 @@
 [package]
 name = "typus_oracle"
 version = "0.4.1"
-published-at = "0xb339308779018f7f7d5334890ca910b6eb1611e652e523dc405bbd7a9fc05ff0"
+published-at = "0x0"
 
 [dependencies]
-Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "testnet" }
-# SupraOracle = { local = "./supra-oracle" }
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "main" }
+SwitchboardStdLib = { git = "https://github.com/switchboard-xyz/sbv2-sui.git", subdir = "move/switchboard_std/", rev = "main"  }
 
 [addresses]
-typus_oracle = "0xb339308779018f7f7d5334890ca910b6eb1611e652e523dc405bbd7a9fc05ff0"
 sui = "0x2"
+typus_oracle = "0x0"
+switchboard = "0x524c15a935d4c34474cdf2604ee42a6c47591d13c6ffb6b678f6b7eaffba12fe"
