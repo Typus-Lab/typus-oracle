@@ -100,7 +100,7 @@ module typus_oracle::oracle {
         oracle.switchboard = option::some(id);
     }
 
-    use switchboard::aggregator::{Aggregator};
+    use switchboard_std::aggregator::{Aggregator};
     use typus_oracle::switchboard_feed_parser;
 
     entry fun update_with_switchboard<T>(

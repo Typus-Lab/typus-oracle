@@ -1,6 +1,6 @@
 module typus_oracle::switchboard_feed_parser {
-    use switchboard::aggregator::{Self, Aggregator}; // For reading aggregators
-    use switchboard::math;
+    use switchboard_std::aggregator::{Self, Aggregator}; // For reading aggregators
+    use switchboard_std::math;
 
     use sui::event::emit;
 
