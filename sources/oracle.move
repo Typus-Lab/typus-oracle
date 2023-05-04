@@ -92,7 +92,7 @@ module typus_oracle::oracle {
         emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
-    use switchboard::aggregator::{Aggregator};
+    use switchboard_std::aggregator::{Aggregator};
     use typus_oracle::switchboard_feed_parser;
 
     entry fun update_switchboard_oracle<T>(
