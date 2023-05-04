@@ -1,12 +1,13 @@
 module typus_oracle::oracle {
     use sui::tx_context::{Self, TxContext};
-    use sui::object::{Self, UID};
+    use sui::object::{Self, UID, ID};
     use sui::transfer;
     use sui::event::emit;
     use sui::clock::{Self, Clock};
 
     use std::type_name;
     use std::ascii::String;
+    use std::option::{Self, Option};
 
     // ======== Structs =========
 
@@ -23,7 +24,8 @@ module typus_oracle::oracle {
         twap_price: u64,
         ts_ms: u64,
         epoch: u64,
-        time_interval: u64
+        time_interval: u64,
+        switchboard: Option<ID>,
     }
 
     // ======== Functions =========
@@ -59,7 +61,8 @@ module typus_oracle::oracle {
             twap_price: 0,
             ts_ms: 0,
             epoch: tx_context::epoch(ctx),
-            time_interval: 300 * 1000
+            time_interval: 300 * 1000,
+            switchboard: option::none(),
         };
 
         transfer::share_object(oracle);
@@ -88,16 +91,27 @@ module typus_oracle::oracle {
         emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
+    entry fun update_switchboard_oracle<T>(
+        oracle: &mut Oracle<T>,
+        _manager_cap: &ManagerCap,
+        feed: &Aggregator,
+    ) {
+        let id = object::id(feed);
+        oracle.switchboard = option::some(id);
+    }
+
     use switchboard::aggregator::{Aggregator};
     use typus_oracle::switchboard_feed_parser;
 
-    public entry fun update_with_switchboard<T>(
+    entry fun update_with_switchboard<T>(
         oracle: &mut Oracle<T>,
-        _manager_cap: &ManagerCap,
         feed: &Aggregator,
         clock: &Clock,
         ctx: &mut TxContext
     ) {
+        assert!(option::is_some(&oracle.switchboard), E_NOT_SWITCHBOARD);
+        assert!(option::borrow(&oracle.switchboard) == &object::id(feed), E_INVALID_SWITCHBOARD);
+
         let ts_ms = clock::timestamp_ms(clock);
 
         let (price_u128, decimal_u8) = switchboard_feed_parser::log_aggregator_info(feed);
@@ -165,6 +179,8 @@ module typus_oracle::oracle {
 
     const E_ORACLE_EXPIRED: u64 = 1;
     const E_INVALID_PRICE: u64 = 2;
+    const E_NOT_SWITCHBOARD: u64 = 3;
+    const E_INVALID_SWITCHBOARD: u64 = 4;
 
     struct PriceEvent has copy, drop { token: String, price: u64, ts_ms: u64, epoch: u64 }
 }
