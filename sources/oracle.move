@@ -4,6 +4,7 @@ module typus_oracle::oracle {
     use sui::transfer;
     use sui::event::emit;
     use sui::clock::{Self, Clock};
+    use sui::math::pow;
 
     use std::type_name;
     use std::ascii::String;
@@ -91,6 +92,9 @@ module typus_oracle::oracle {
         emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
+    use switchboard::aggregator::{Aggregator};
+    use typus_oracle::switchboard_feed_parser;
+
     entry fun update_switchboard_oracle<T>(
         oracle: &mut Oracle<T>,
         _manager_cap: &ManagerCap,
@@ -99,9 +103,6 @@ module typus_oracle::oracle {
         let id = object::id(feed);
         oracle.switchboard = option::some(id);
     }
-
-    use switchboard_std::aggregator::{Aggregator};
-    use typus_oracle::switchboard_feed_parser;
 
     entry fun update_with_switchboard<T>(
         oracle: &mut Oracle<T>,
@@ -119,9 +120,9 @@ module typus_oracle::oracle {
 
         let decimal = (decimal_u8 as u64);
         if (decimal > oracle.decimal) {
-            price_u128 = price_u128 / ((10 ^ (decimal - oracle.decimal)) as u128);
+            price_u128 = price_u128 / (pow(10, ((decimal - oracle.decimal) as u8)) as u128);
         } else {
-            price_u128 = price_u128 * ((10 ^ (oracle.decimal - decimal)) as u128);
+            price_u128 = price_u128 * (pow(10, ((oracle.decimal - decimal) as u8)) as u128);
         };
 
         let price = (price_u128 as u64);
