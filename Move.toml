@@ -5,7 +5,7 @@ published-at = "0x435966c36f93c4a97fba5291c01f9d95902f3ab62c5e94b390bf4dfe83a2e3
 
 [dependencies]
 Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "testnet" }
-SwitchboardStdLib = { local = "../sbv2-sui/move/switchboard_std" }
+SwitchboardStdLib = { local = "../sbv2-sui/move/testnet/switchboard_std" }
 
 [addresses]
 sui = "0x2"
