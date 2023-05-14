@@ -1,7 +1,7 @@
 [package]
 name = "typus_oracle"
 version = "0.4.1"
-published-at = "0x435966c36f93c4a97fba5291c01f9d95902f3ab62c5e94b390bf4dfe83a2e3a8"
+published-at = "0x88e7363f43c5620bd58f2c95d7706565ac61db0e5102bb6b4dd3b5062d174ea4"
 
 [dependencies]
 Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "testnet" }
@@ -9,5 +9,4 @@ SwitchboardStdLib = { local = "../sbv2-sui/move/testnet/switchboard_std" }
 
 [addresses]
 sui = "0x2"
-typus_oracle = "0x435966c36f93c4a97fba5291c01f9d95902f3ab62c5e94b390bf4dfe83a2e3a8"
-switchboard_std = "0x524c15a935d4c34474cdf2604ee42a6c47591d13c6ffb6b678f6b7eaffba12fe"
+typus_oracle = "0x88e7363f43c5620bd58f2c95d7706565ac61db0e5102bb6b4dd3b5062d174ea4"

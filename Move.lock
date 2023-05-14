@@ -22,7 +22,7 @@ dependencies = [
 
 [[move.package]]
 name = "SwitchboardStdLib"
-source = { local = "../sbv2-sui/move/switchboard_std" }
+source = { local = "../sbv2-sui/move/testnet/switchboard_std" }
 
 dependencies = [
   { name = "MoveStdlib" },
