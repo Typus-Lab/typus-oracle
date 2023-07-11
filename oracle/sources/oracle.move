@@ -136,6 +136,35 @@ module typus_oracle::oracle {
         emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
     }
 
+    use typus_oracle::pyth_parser;
+    use pyth::state::{State as PythState};
+    use pyth::price_info::{PriceInfoObject};
+
+    entry fun update_with_pyth<T>(
+        oracle: &mut Oracle<T>,
+        state: &PythState,
+        price_info_object: &PriceInfoObject,
+        clock: &Clock,
+        ctx: &mut TxContext
+    ) {
+        let (price, decimal) = pyth_parser::get_price(state, price_info_object, clock);
+        assert!(price > 0, E_INVALID_PRICE);
+
+        if (decimal > oracle.decimal) {
+            price = price / pow(10, ((decimal - oracle.decimal) as u8));
+        } else {
+            price = price * pow(10, ((oracle.decimal - decimal) as u8));
+        };
+
+        oracle.price = price;
+        oracle.twap_price = price;
+        let ts_ms = clock::timestamp_ms(clock);
+        oracle.ts_ms = ts_ms;
+        oracle.epoch = tx_context::epoch(ctx);
+
+        let token = *type_name::borrow_string(&type_name::get<T>());
+        emit(PriceEvent {token, price, ts_ms, epoch: tx_context::epoch(ctx) });
+    }
 
 
     public entry fun copy_manager_cap<T>(

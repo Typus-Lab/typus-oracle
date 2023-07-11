@@ -1,0 +1,13 @@
+[package]
+name = "typus_oracle"
+version = "0.4.1"
+published-at = "0x3e38988d81998ef954b7859a626913200d4333c6a8fc6ddc1696f6b41673437e"
+
+[dependencies]
+Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "mainnet" }
+SwitchboardStdLib = { local = "../../sbv2-sui/move/mainnet/switchboard_std" }
+Pyth = { local = "../../pyth-crosschain/target_chains/sui/contracts"}
+
+[addresses]
+sui = "0x2"
+typus_oracle = "0x3e38988d81998ef954b7859a626913200d4333c6a8fc6ddc1696f6b41673437e"
