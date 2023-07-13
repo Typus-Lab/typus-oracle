@@ -207,6 +207,17 @@ module typus_oracle::oracle {
         oracle.time_interval = time_interval;
     }
 
+    public entry fun update_token<T>(
+        oracle: &mut Oracle<T>,
+        _manager_cap: &ManagerCap,
+        base_token: String,
+        quote_token: String,
+    ) {
+        oracle.base_token = base_token;
+        oracle.quote_token = quote_token;
+    }
+
+
     const E_ORACLE_EXPIRED: u64 = 1;
     const E_INVALID_PRICE: u64 = 2;
     const E_NOT_SWITCHBOARD: u64 = 3;
