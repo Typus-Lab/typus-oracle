@@ -171,10 +171,21 @@ module typus_oracle::oracle {
         };
 
         oracle.price = price;
-        oracle.twap_price = price;
         let ts_ms = clock::timestamp_ms(clock);
         oracle.ts_ms = ts_ms;
         oracle.epoch = tx_context::epoch(ctx);
+
+        let (price, decimal, pyth_ts) = pyth_parser::get_ema_price(price_info_object);
+        assert!(price > 0, E_INVALID_PRICE);
+        assert!(ts_ms/1000 - pyth_ts < oracle.time_interval, E_ORACLE_EXPIRED);
+
+        if (decimal > oracle.decimal) {
+            price = price / pow(10, ((decimal - oracle.decimal) as u8));
+        } else {
+            price = price * pow(10, ((oracle.decimal - decimal) as u8));
+        };
+
+        oracle.twap_price = price;
 
         emit(PriceEvent {id: object::id(oracle), price, ts_ms});
     }
