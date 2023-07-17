@@ -148,7 +148,7 @@ module typus_oracle::oracle {
         price_info_object: &PriceInfoObject,
     ) {
         let id = object::id(price_info_object);
-        oracle.switchboard = option::some(id);
+        oracle.pyth = option::some(id);
     }
 
     entry fun update_with_pyth(
