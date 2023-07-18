@@ -5,8 +5,9 @@ module typus_oracle::pyth_parser {
 
     use pyth::pyth;
     use pyth::state::{Self, State as PythState};
-    use pyth::price_info::{PriceInfoObject};
+    use pyth::price_info::{Self, PriceInfoObject};
     use pyth::price::{Self, Price};
+    use pyth::price_feed;
 
     use pyth::i64::{Self, I64};
 
@@ -36,6 +37,25 @@ module typus_oracle::pyth_parser {
 
         emit(PythPrice{price, conf, timestamp, decimal});
         (price, decimal)
+    }
+
+    public(friend) entry fun get_ema_price(
+        price_info_object: &PriceInfoObject
+    ): (u64, u64, u64) {
+        let price_info = price_info::get_price_info_from_price_info_object(price_info_object);
+        let price_result: Price = price_feed::get_price(price_info::get_price_feed(&price_info));
+
+        let price: I64 = price::get_price(&price_result);
+        let expo: I64 = price::get_expo(&price_result);
+        let conf = price::get_conf(&price_result);
+        let timestamp = price::get_timestamp(&price_result);
+
+        let price = i64::get_magnitude_if_positive(&price);
+        let decimal = i64::get_magnitude_if_negative(&expo);
+        // price * (10^expo) => expo = -decimal
+
+        emit(PythPrice{price, conf, timestamp, decimal});
+        (price, decimal, timestamp)
     }
 
     struct PythPriceInfoObject has copy, drop {
