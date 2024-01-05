@@ -2,11 +2,14 @@
 
 [move]
 version = 0
+manifest_digest = "8C902797E9B36538D9154B58363FC3AD472A8E924B2D355BC52A34E4B21E06DA"
+deps_digest = "F9B494B64F0615AED0E98FC12A85B85ECD2BC5185C22D30E7F67786BB52E507C"
 
 dependencies = [
   { name = "Pyth" },
   { name = "Sui" },
   { name = "SwitchboardStdLib" },
+  { name = "supra_holder" },
 ]
 
 [[move.package]]
@@ -41,8 +44,34 @@ dependencies = [
 
 [[move.package]]
 name = "Wormhole"
-source = { local = "../../wormhole/sui/wormhole" }
+source = { git = "https://github.com/wayneAl/wormhole.git", rev = "testnet", subdir = "sui/wormhole" }
 
 dependencies = [
   { name = "Sui" },
+]
+
+[[move.package]]
+name = "supra_holder"
+source = { git = "https://github.com/Typus-Lab/dora-interface.git", rev = "master", subdir = "sui/mainnet/supra_holder" }
+
+dependencies = [
+  { name = "Sui" },
+  { name = "supra_validator" },
+]
+
+[[move.package]]
+name = "supra_utils"
+source = { git = "https://github.com/Typus-Lab/dora-interface.git", rev = "master", subdir = "sui/mainnet/supra_utils" }
+
+dependencies = [
+  { name = "Sui" },
+]
+
+[[move.package]]
+name = "supra_validator"
+source = { git = "https://github.com/Typus-Lab/dora-interface.git", rev = "master", subdir = "sui/mainnet/supra_validator" }
+
+dependencies = [
+  { name = "Sui" },
+  { name = "supra_utils" },
 ]

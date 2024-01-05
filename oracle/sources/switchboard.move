@@ -4,8 +4,8 @@ module typus_oracle::switchboard_feed_parser {
 
     use sui::event::emit;
 
-    const EAGGREGATOR_INFO_EXISTS:u64 = 0;
-    const ENO_AGGREGATOR_INFO_EXISTS:u64 = 1;
+    // const EAGGREGATOR_INFO_EXISTS:u64 = 0;
+    // const ENO_AGGREGATOR_INFO_EXISTS:u64 = 1;
 
     /*
       Num

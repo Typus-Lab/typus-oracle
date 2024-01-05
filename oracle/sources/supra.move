@@ -1,17 +1,21 @@
-// module typus_oracle::supra {
-//     use sui::event::emit;
-//     use std::string::String;
+module typus_oracle::supra {
+    use sui::event::emit;
+    use supra_holder::SupraSValueFeed::{get_price, OracleHolder};
 
-//     use SupraOracle::PriceOracle::{get_price, OracleHolder};
+    public fun retrieve_price(
+        oracle_holder: &OracleHolder,
+        pair: u32
+    ): (u128, u16, u128) {
+        let (price, decimal, timestamp, round) = get_price(oracle_holder, pair);
+        emit(SupraPrice { pair, price, decimal, timestamp, round });
+        (price, decimal, timestamp)
+    }
 
-//     public entry fun retrieve_price(
-//         oracle_holder: &mut OracleHolder,
-//         symbol_bytes: vector<u8>
-//     ) {
-//         let price = get_price(oracle_holder, symbol_bytes);
-
-//         emit(PriceEvent{price});
-//     }
-
-//     struct PriceEvent has copy, drop { price: String }
-// }
+    struct SupraPrice has copy, drop {
+        pair: u32,
+        price: u128,
+        decimal: u16,
+        timestamp: u128,
+        round: u64
+    }
+}
