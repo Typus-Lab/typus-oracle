@@ -220,7 +220,7 @@ module typus_oracle::oracle {
         assert!(price_u128 > 0, E_INVALID_PRICE);
 
         let ts_ms = clock::timestamp_ms(clock);
-        assert!(ts_ms - timestamp_ms_u128 < oracle.time_interval, E_ORACLE_EXPIRED);
+        assert!(ts_ms - (timestamp_ms_u128 as u64) < oracle.time_interval, E_ORACLE_EXPIRED);
 
         let oracle_decimal = (oracle.decimal as u16);
 
