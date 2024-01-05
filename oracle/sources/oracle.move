@@ -216,11 +216,11 @@ module typus_oracle::oracle {
     ) {
         let pair: u32 = *dynamic_field::borrow(&oracle.id, string::utf8(b"supra_pair"));
 
-        let (price_u128, decimal, timestamp_u128) = supra::retrieve_price(oracle_holder, pair);
+        let (price_u128, decimal, timestamp_ms_u128) = supra::retrieve_price(oracle_holder, pair);
         assert!(price_u128 > 0, E_INVALID_PRICE);
 
         let ts_ms = clock::timestamp_ms(clock);
-        assert!(ts_ms/1000 - (timestamp_u128 as u64) < oracle.time_interval, E_ORACLE_EXPIRED);
+        assert!(ts_ms - timestamp_ms_u128 < oracle.time_interval, E_ORACLE_EXPIRED);
 
         let oracle_decimal = (oracle.decimal as u16);
 
