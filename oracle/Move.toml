@@ -7,6 +7,7 @@ published-at = "0x1d17058789bd1e1e79f1a92424519a88146f191f58a06cc4d9ab23d17d46ab
 Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "mainnet" }
 SwitchboardStdLib = { git = "https://github.com/WayneAl/sui-sdk.git", subdir = "move/testnet/switchboard_std", rev = "main" }
 Pyth = { git = "https://github.com/WayneAl/pyth-crosschain.git", subdir = "target_chains/sui/contracts", rev = "368d42b9" }
+supra_holder = { git = "https://github.com/Typus-Lab/dora-interface.git", subdir = "sui/testnet/supra_holder", rev = "master" }
 
 [addresses]
 sui = "0x2"

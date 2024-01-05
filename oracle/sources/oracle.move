@@ -5,7 +5,9 @@ module typus_oracle::oracle {
     use sui::event::emit;
     use sui::clock::{Self, Clock};
     use sui::math::pow;
+    use sui::dynamic_field;
 
+    use std::string;
     use std::type_name::{Self, TypeName};
     use std::ascii::String;
     use std::option::{Self, Option};
@@ -112,7 +114,7 @@ module typus_oracle::oracle {
         oracle: &mut Oracle,
         feed: &Aggregator,
         clock: &Clock,
-        ctx: &mut TxContext
+        ctx: & TxContext
     ) {
         assert!(option::is_some(&oracle.switchboard), E_NOT_SWITCHBOARD);
         assert!(option::borrow(&oracle.switchboard) == &object::id(feed), E_INVALID_SWITCHBOARD);
@@ -156,7 +158,7 @@ module typus_oracle::oracle {
         state: &PythState,
         price_info_object: &PriceInfoObject,
         clock: &Clock,
-        ctx: &mut TxContext
+        ctx: & TxContext
     ) {
         assert!(option::is_some(&oracle.pyth), E_NOT_PYTH);
         assert!(option::borrow(&oracle.pyth) == &object::id(price_info_object), E_INVALID_PYTH);
@@ -190,6 +192,53 @@ module typus_oracle::oracle {
         emit(PriceEvent {id: object::id(oracle), price, ts_ms});
     }
 
+    use typus_oracle::supra;
+    use supra_holder::SupraSValueFeed::OracleHolder;
+
+    entry fun update_supra_oracle(
+        oracle: &mut Oracle,
+        _manager_cap: &ManagerCap,
+        pair: u32
+    ) {
+        if (dynamic_field::exists_(& oracle.id, string::utf8(b"supra_pair"))) {
+            let supra_pair: &mut u32 = dynamic_field::borrow_mut(&mut oracle.id, string::utf8(b"supra_pair"));
+            *supra_pair = pair;
+        } else {
+            dynamic_field::add(&mut oracle.id, string::utf8(b"supra_pair"), pair);
+        };
+    }
+
+    entry fun update_with_supra(
+        oracle: &mut Oracle,
+        oracle_holder: &OracleHolder,
+        clock: &Clock,
+        ctx: & TxContext
+    ) {
+        let pair: u32 = *dynamic_field::borrow(&oracle.id, string::utf8(b"supra_pair"));
+
+        let (price_u128, decimal, timestamp_u128) = supra::retrieve_price(oracle_holder, pair);
+        assert!(price_u128 > 0, E_INVALID_PRICE);
+
+        let ts_ms = clock::timestamp_ms(clock);
+        assert!(ts_ms/1000 - (timestamp_u128 as u64) < oracle.time_interval, E_ORACLE_EXPIRED);
+
+        let oracle_decimal = (oracle.decimal as u16);
+
+        if (decimal > oracle_decimal) {
+            price_u128 = price_u128 / (pow(10, ((decimal - oracle_decimal) as u8)) as u128);
+        } else {
+            price_u128 = price_u128 * (pow(10, ((oracle_decimal - decimal) as u8)) as u128);
+        };
+
+        let price_u64 = (price_u128 as u64);
+
+        oracle.price = price_u64;
+        oracle.twap_price = price_u64;
+        oracle.ts_ms = ts_ms;
+        oracle.epoch = tx_context::epoch(ctx);
+
+        emit(PriceEvent {id: object::id(oracle), price: price_u64, ts_ms});
+    }
 
     public entry fun copy_manager_cap(
         _manager_cap: &ManagerCap,
