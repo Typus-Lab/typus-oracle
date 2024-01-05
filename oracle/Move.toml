@@ -1,7 +1,7 @@
 [package]
 name = "typus_oracle"
-version = "0.6.0"
-published-at = "0x6b5aa33a21d8b5cafbe8cff4dcb0d19909abc91ef289dc9a0b6d90f8fd1152d4"
+version = "0.6.1"
+published-at = "0x480ba5f45433f5589cec0f8dbbfc04d523d7182725cf896dce9090e56b34f4b8"
 
 [dependencies]
 Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "mainnet" }
