@@ -1,7 +1,7 @@
 [package]
 name = "typus_oracle"
-version = "0.5.0"
-published-at = "0x1d17058789bd1e1e79f1a92424519a88146f191f58a06cc4d9ab23d17d46ab73"
+version = "0.6.0"
+published-at = "0x6b5aa33a21d8b5cafbe8cff4dcb0d19909abc91ef289dc9a0b6d90f8fd1152d4"
 
 [dependencies]
 Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "mainnet" }
@@ -11,4 +11,5 @@ supra_holder = { git = "https://github.com/Typus-Lab/dora-interface.git", subdir
 
 [addresses]
 sui = "0x2"
-typus_oracle = "0x1d17058789bd1e1e79f1a92424519a88146f191f58a06cc4d9ab23d17d46ab73"
+typus_oracle = "0x1d17058789bd1e1e79f1a92424519a88146f191f58a06cc4d9ab23d17d46ab73"typus_oracle = "0x0"
+# UpgradeCap = 0x592040e7fa7d01dd790d108cfdc8e7eacd05c8d50eef0ee274f51a0cc3367536
