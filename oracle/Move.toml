@@ -3,11 +3,16 @@ name = "typus_oracle"
 version = "0.6.1"
 published-at = "0x480ba5f45433f5589cec0f8dbbfc04d523d7182725cf896dce9090e56b34f4b8"
 
+[dependencies.Sui]
+git = "https://github.com/MystenLabs/sui.git"
+subdir = "crates/sui-framework/packages/sui-framework"
+rev = "mainnet"
+
 [dependencies]
-Sui = { git = "https://github.com/MystenLabs/sui.git", subdir = "crates/sui-framework/packages/sui-framework", rev = "mainnet" }
-SwitchboardStdLib = { git = "https://github.com/WayneAl/sui-sdk.git", subdir = "move/testnet/switchboard_std", rev = "main" }
-Pyth = { git = "https://github.com/WayneAl/pyth-crosschain.git", subdir = "target_chains/sui/contracts", rev = "368d42b9" }
-supra_holder = { git = "https://github.com/Typus-Lab/dora-interface.git", subdir = "sui/testnet/supra_holder", rev = "master" }
+# on Testnet
+supra_holder = { git = "git@github.com:Typus-Lab/dora-interface.git", subdir = "sui/testnet/supra_holder", rev = "master" }
+SwitchboardStdLib = { git = "git@github.com:Typus-Lab/sui-sdk.git", subdir = "move/testnet/switchboard_std", rev = "main" }
+Pyth = { git = "git@github.com:Typus-Lab/pyth-crosschain.git", subdir = "target_chains/sui/contracts", rev = "testnet" }
 
 [addresses]
 sui = "0x2"
