@@ -147,47 +147,61 @@ module typus_oracle::oracle {
     entry fun update_pyth_oracle(
         oracle: &mut Oracle,
         _manager_cap: &ManagerCap,
-        price_info_object: &PriceInfoObject,
+        base_price_info_object: &PriceInfoObject,
+        quote_price_info_object: &PriceInfoObject,
     ) {
-        let id = object::id(price_info_object);
+        let id = object::id(base_price_info_object);
         oracle.pyth = option::some(id);
+        // add quote
+        let id = object::id(quote_price_info_object);
+        dynamic_field::add(&mut oracle.id, string::utf8(b"quote_price_info_object"), id);
     }
 
     entry fun update_with_pyth(
         oracle: &mut Oracle,
         state: &PythState,
-        price_info_object: &PriceInfoObject,
+        base_price_info_object: &PriceInfoObject,
+        quote_price_info_object: &PriceInfoObject,
         clock: &Clock,
         ctx: & TxContext
     ) {
         assert!(option::is_some(&oracle.pyth), E_NOT_PYTH);
-        assert!(option::borrow(&oracle.pyth) == &object::id(price_info_object), E_INVALID_PYTH);
+        assert!(option::borrow(&oracle.pyth) == &object::id(base_price_info_object), E_INVALID_PYTH);
+        assert!(dynamic_field::borrow(&oracle.id, string::utf8(b"quote_price_info_object"))== &object::id(quote_price_info_object), E_INVALID_PYTH);
 
-        let (price, decimal) = pyth_parser::get_price(state, price_info_object, clock);
-        assert!(price > 0, E_INVALID_PRICE);
+        let (base_price, decimal) = pyth_parser::get_price(state, base_price_info_object, clock);
+        assert!(base_price > 0, E_INVALID_PRICE);
 
         if (decimal > oracle.decimal) {
-            price = price / pow(10, ((decimal - oracle.decimal) as u8));
+            base_price = base_price / pow(10, ((decimal - oracle.decimal) as u8));
         } else {
-            price = price * pow(10, ((oracle.decimal - decimal) as u8));
+            base_price = base_price * pow(10, ((oracle.decimal - decimal) as u8));
         };
 
+        let (quote_price, decimal) = pyth_parser::get_price(state, quote_price_info_object, clock);
+        assert!(quote_price > 0, E_INVALID_PRICE);
+
+        let price = (((base_price as u128) * (pow(10, (decimal as u8)) as u128) / (quote_price as u128)) as u64);
         oracle.price = price;
         let ts_ms = clock::timestamp_ms(clock);
         oracle.ts_ms = ts_ms;
         oracle.epoch = tx_context::epoch(ctx);
 
-        let (price, decimal, pyth_ts) = pyth_parser::get_ema_price(price_info_object);
-        assert!(price > 0, E_INVALID_PRICE);
+        let (base_price, decimal, pyth_ts) = pyth_parser::get_ema_price(base_price_info_object);
+        assert!(base_price > 0, E_INVALID_PRICE);
         assert!(ts_ms/1000 - pyth_ts < oracle.time_interval, E_ORACLE_EXPIRED);
 
         if (decimal > oracle.decimal) {
-            price = price / pow(10, ((decimal - oracle.decimal) as u8));
+            base_price = base_price / pow(10, ((decimal - oracle.decimal) as u8));
         } else {
-            price = price * pow(10, ((oracle.decimal - decimal) as u8));
+            base_price = base_price * pow(10, ((oracle.decimal - decimal) as u8));
         };
 
-        oracle.twap_price = price;
+        let (quote_price, decimal, pyth_ts) = pyth_parser::get_ema_price(quote_price_info_object);
+        assert!(quote_price > 0, E_INVALID_PRICE);
+        assert!(ts_ms/1000 - pyth_ts < oracle.time_interval, E_ORACLE_EXPIRED);
+
+        oracle.twap_price = (((base_price as u128) * (pow(10, (decimal as u8)) as u128) / (quote_price as u128)) as u64);
 
         emit(PriceEvent {id: object::id(oracle), price, ts_ms});
     }
