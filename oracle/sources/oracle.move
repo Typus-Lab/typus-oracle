@@ -157,7 +157,7 @@ module typus_oracle::oracle {
         dynamic_field::add(&mut oracle.id, string::utf8(b"quote_price_info_object"), id);
     }
 
-    entry fun update_with_pyth(
+    public fun update_with_pyth(
         oracle: &mut Oracle,
         state: &PythState,
         base_price_info_object: &PriceInfoObject,
