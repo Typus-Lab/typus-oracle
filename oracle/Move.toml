@@ -8,6 +8,11 @@ git = "https://github.com/MystenLabs/sui.git"
 subdir = "crates/sui-framework/packages/sui-framework"
 rev = "mainnet"
 
+[dependencies.Sui]
+git = "https://github.com/MystenLabs/sui.git"
+subdir = "crates/sui-framework/packages/sui-framework"
+rev = "mainnet"
+
 [dependencies]
 # on Testnet
 supra_holder = { git = "git@github.com:Typus-Lab/dora-interface.git", subdir = "sui/mainnet/supra_holder", rev = "master" }
