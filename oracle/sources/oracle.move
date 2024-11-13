@@ -7,6 +7,7 @@ module typus_oracle::oracle {
     use sui::math::pow;
     use sui::dynamic_field;
 
+    use std::vector;
     use std::string;
     use std::type_name::{Self, TypeName};
     use std::ascii::String;
@@ -77,6 +78,44 @@ module typus_oracle::oracle {
         transfer::share_object(oracle);
     }
 
+    struct UpdateAuthority has key {
+        id: UID,
+        authority: vector<address>,
+    }
+
+    entry fun new_update_authority(
+        _manager_cap: &ManagerCap,
+        ctx: &mut TxContext
+    ) {
+        let update_authority = UpdateAuthority {id: object::new(ctx), authority: vector[ tx_context::sender(ctx) ]};
+        transfer::share_object(update_authority);
+    }
+
+    entry fun add_update_authority(
+        _manager_cap: &ManagerCap,
+        update_authority: &mut UpdateAuthority,
+        addresses: vector<address>,
+    ) {
+        while (vector::length(&addresses) > 0) {
+            let a: address = vector::pop_back(&mut addresses);
+            vector::push_back(&mut update_authority.authority, a);
+        }
+    }
+
+    public entry fun update_v2(
+        oracle: &mut Oracle,
+        update_authority: & UpdateAuthority,
+        price: u64,
+        twap_price: u64,
+        clock: &Clock,
+        ctx: &mut TxContext
+    ) {
+        // check authority
+        vector::contains(&update_authority.authority, &tx_context::sender(ctx));
+
+        update_(oracle, price, twap_price, clock, ctx);
+    }
+
     public entry fun update(
         oracle: &mut Oracle,
         _manager_cap: &ManagerCap,
@@ -84,6 +123,16 @@ module typus_oracle::oracle {
         twap_price: u64,
         clock: &Clock,
         ctx: &mut TxContext
+    ) {
+        update_(oracle, price, twap_price, clock, ctx);
+    }
+
+    fun update_(
+        oracle: &mut Oracle,
+        price: u64,
+        twap_price: u64,
+        clock: &Clock,
+        ctx: & TxContext
     ) {
         assert!(price > 0, E_INVALID_PRICE);
         assert!(twap_price > 0, E_INVALID_PRICE);
