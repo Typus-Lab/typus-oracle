@@ -21,25 +21,25 @@
 ### Time Oracle (20s update)
 
 1. unix_time: `0x31ce3e644e13dcb241d68bdba2783b1d6ab72a6c`
-    - Key: `0xdc99399ec8f5a1888eed19fe17e945a1196df15b`
+   - Key: `0xdc99399ec8f5a1888eed19fe17e945a1196df15b`
 
 ### Price Oracle (20s update)
 
 1. BTC `0x379cf4a0b69012736feeb64302c4d6ce0a29fca7`
 
-    - Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::btc::BTC`
-    - Key: `0xd48b60fed34e7ab93f5a65ef5b6805e453e4d40e`
-    - Data Source: https://api.binance.com/api/v3/ticker/price?symbol=BTCBUSD
+   - Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::btc::BTC`
+   - Key: `0xd48b60fed34e7ab93f5a65ef5b6805e453e4d40e`
+   - Data Source: https://api.binance.com/api/v3/ticker/price?symbol=BTCBUSD
 
 2. ETH `0x14af45e8938c39e845ca189fa898f1e569ea2ced`
 
-    - Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::eth::ETH`
-    - Key: `0xca4037ffae6006e2e7ce1db1ac74b1d25e5d0b3a`
-    - Data Source: https://api.binance.com/api/v3/ticker/price?symbol=ETHBUSD
+   - Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::eth::ETH`
+   - Key: `0xca4037ffae6006e2e7ce1db1ac74b1d25e5d0b3a`
+   - Data Source: https://api.binance.com/api/v3/ticker/price?symbol=ETHBUSD
 
 3. SUI `0xb2a281264d928622999103afa27fceead0cb2b86`
-    - Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::sui::SUI`
-    - Key: `0x69e764b55e7dfcf5604da8cf5571e5e8501f294f`
+   - Token: `0xa1d0cdb1b41c786d53a03d30340ab05718010e04::sui::SUI`
+   - Key: `0x69e764b55e7dfcf5604da8cf5571e5e8501f294f`
 
 Token: https://github.com/Typus-Lab/sui-dev-token
 
@@ -66,3 +66,13 @@ https://supraoracles.com
     "DOGE_ORACLE": "0xe43157e6cf9d4090245c7710e1a015cded9c376e25742b590ee9c06989826972",
     "DOGE_ORACLE_KEY": "0x7df1df5bbe3b5086a7318fceea6bee603d03b917574fff894fd6408f5956d1fb"
 ```
+
+<!-- sui client ptb \
+--assign manager_cap @0xbb1ec0169c2fb307ebca037f75bb827fcd003fb713112cc5c6481fa859ef6c6d \
+--move-call 0xaf44818c67a878b9eba0c63186b00e80d9fc3d1e2ae02f00fa3993b0e683bff3::oracle::new_update_authority manager_cap
+
+sui client ptb \
+--assign manager_cap @0xbb1ec0169c2fb307ebca037f75bb827fcd003fb713112cc5c6481fa859ef6c6d \
+--assign update_authority @0xef710183951f400bc1480bab662d793e7ff324192a2518d8bd036358d9f0fb85 \
+--make-move-vec '<address>' '[@0x9ea97c22b7577951c9465f0dc2a957aa24fc1c0d721a936f3f613b9526439ad,@0x78fe054243da91df1b027e6f8edb2b3a5d6f29e7193740fa33af5f3085f95584,@0x9106540a21f12648c63ba9a846fd8d0ff923ae4ea4d5cb64b4d8a82e33b4e092,@0xa6cc517e6bca309fc067d3fe73f685c05e74fa54fd4b3e19c48ef8894f0ef061,@0xaf5373ea593d2506ae7caeba15e2332186f176f67119dac821955fc16a23cdc2,@0xc38d557bfb1b174a6f327b6ba15dbf73979ce8de25d1166fd443d1fe962af0be,@0xd8370b8e732671933bd2c62b1bdb1eff71647765127b3e4cb9a10f1ee8dcfafa]' --assign addresses \
+--move-call 0xaf44818c67a878b9eba0c63186b00e80d9fc3d1e2ae02f00fa3993b0e683bff3::oracle::add_update_authority manager_cap update_authority addresses -->
