@@ -1,7 +1,7 @@
 [package]
 name = "typus_oracle"
-version = "0.6.2"
-published-at = "0xe7800ed42f3e464820f7009974f199ab8525c3ee2fcd5bdf9e99ba1adcebb74f"
+version = "0.6.3"
+published-at = "0xaf44818c67a878b9eba0c63186b00e80d9fc3d1e2ae02f00fa3993b0e683bff3"
 
 [dependencies.Sui]
 git = "https://github.com/MystenLabs/sui.git"
